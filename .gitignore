@@ -1,0 +1,17 @@
+# node modules
+node_modules
+
+# .env
+.env
+.env_qa
+.env_production
+
+#keys
+keys/
+
+#log file
+access.log
+
+#public
+public/*
+
