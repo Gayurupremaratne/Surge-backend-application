@@ -40,7 +40,7 @@ const userRoutes = {
                             email: email,
                             dateOfBirthday: null,
                             mobile: null,
-                            status: null,
+                            status: 1,
                             password: hash,
                             accountType: 'student'
                             
@@ -76,8 +76,10 @@ const userRoutes = {
     },
 
     login: (req, res) => {
-        const { email, password } = req.body;
 
+        const { email, password } = req.body;
+        console.log(email)
+        console.log(password)
         userModel.find({email:email}, (err, user) => {
             //console.log(user)
             if (user.length === 0)  {

@@ -24,6 +24,7 @@ var schema = new mongoose.Schema({
     },
     status: {
         type: Boolean,
+        required: true,
         default: 1
     },
     password: {

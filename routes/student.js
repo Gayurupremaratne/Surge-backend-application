@@ -9,13 +9,15 @@ const studentRoutes = {
           const {
             title,
             description,
-            id
+            id,
+            createdDate
           } = req.body;
        
           const note = new NotesModel({
             title: title,
             description:description,
-            userID:id
+            userID:id,
+            createdDate:createdDate
         });
       
           note.save( (err, data) => {
@@ -23,7 +25,7 @@ const studentRoutes = {
               response.fail(
                 req,
                 res,
-                response.message.unable_to_load,
+                response.messages.unable_to_load,
                 "note create",
                 err
               );
@@ -57,24 +59,42 @@ const studentRoutes = {
 
     update: (req, res) => {
         const { id } = req.params;
-        const { title, description, userID } = req.body;
+        const { title, description, userID, createdDate } = req.body;
 
         const userData = {
             title:title,
             description:description,
-            userID:userID
+            userID:userID,
+            createdDate:createdDate
         };
-        NotesModel.findByIdAndUpdate(id, userData, { useFindAndModify: false }).then(result =>{
-          if (!result) {
-              response.fail(req, res, response.messages.db_error, 'update note', result);
-              return;
-          }
-          else {
+        console.log("data",id)
+        NotesModel.updateOne({_id:id},
+          {$set: 
+              { "title":title,
+                "description":description
+                
+          }}).then(result =>{
+              if (!result) {
+                  response.fail(req, res, response.messages.db_error, 'Save note', result);
+                  return;
+              }
+              else {
 
-              response.success(req, res, result, 'Successfully updated');
-              return;
-          }
-      })
+                  response.success(req, res, result, 'Successfully updated');
+                  return;
+              }
+          })
+      //   NotesModel.findByIdAndUpdate(id, userData, { useFindAndModify: false }).then(result =>{
+      //     if (!result) {
+      //         response.fail(req, res, response.messages.db_error, 'update note', result);
+      //         return;
+      //     }
+      //     else {
+
+      //         response.success(req, res, result, 'Successfully updated');
+      //         return;
+      //     }
+      // })
              
         //   if(err){
         //     response.fail(req, res, response.messages.db_error, 'update note', err);

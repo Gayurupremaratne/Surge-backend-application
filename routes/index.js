@@ -19,7 +19,7 @@ router.put('/student/note/update/:id',student.update);
 router.delete('/student/note/delete/:id',student.delete);
 
 //admin
-router.get('/admin/users',admin.getUsers);
+router.get('/admin/users/:no',admin.getUsers);
 router.get('/admin/user/:id',admin.getUserByID);
 
 module.exports = router;
